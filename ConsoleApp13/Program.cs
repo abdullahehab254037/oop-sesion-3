@@ -170,4 +170,67 @@
             Console.WriteLine($"estimated:{this.EstimatedCost},,,,customfee:{CustomsFee},,,,country:{DestinationCountry}");
         }
     }
+    public class DeliveryCenter
+    {
+        private Shipment[] shipments;
+        private int count;
+        public int Capacity = 3;
+        public DeliveryCenter()
+        {
+            shipments = new Shipment[Capacity];
+            count = 0;
+        }
+        public Shipment this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Capacity)
+                    return null;
+                return shipments[index];
+            }
+            set
+            {
+                if (index < 0 || index >= Capacity)
+                    return;
+
+                shipments[index] = value;
+                count++;
+            }
+        }
+        public Shipment this[string trackingCode]
+        {
+            get
+            {
+                for (int i = 0; i < Capacity; i++)
+                {
+                    if (shipments[i].code == trackingCode)
+                        return shipments[i];
+                }
+                return null;
+            }
+        }
+
+        public bool AddShipment(Shipment shipment)
+        {
+            for (int i = 0; i < Capacity; i++)
+            {
+
+                if (shipments[i] == null)
+                {
+                    shipments[i] = shipment;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void  printallshipments()
+        {
+            foreach(Shipment s in shipments)
+            {
+                s.PrintShipment();
+            }
+        }
+
+
+    }
 }
